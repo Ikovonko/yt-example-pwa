@@ -25,3 +25,180 @@
 </div>
 </body>
 </html>
+
+
+<!-- permissions -->
+<html>
+  <head>
+    <script>
+      function ask_for_permission()
+      {
+        Notification.requestPermission(function(){});
+      }
+      
+      function send()
+      {
+        new Notification(document.getElementById('title').value, {
+          body: document.getElementById('body').value,
+          icon: document.getElementById('icon').value
+        });
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <button id="ask_permission" onclick="ask_for_permission()">Aktivieren</button>
+      <div>
+        Titel:
+        <input id="title" value="Neue Benachrichtigung" /><br />
+        Inhalt:
+        <input id="body" value="Ich bin eine Webnotification!" /><br />
+        Icon:
+        <input id="icon" value="https://www.a-coding-project.de/demo/notification/logo.png" /><br />
+        <button onclick="send()">Senden</button>
+    </div>
+  </body>
+</html>
+
+<div>
+
+  <!-- input 1 clipboard-->
+
+  <p class="heading">Use the forms below for programmatic clipboard access or invoke standard copy/cut/paste operations with your keyboard.</p>
+<section>
+  <label><input type="radio" name="api" value="sync"> Use older, synchronous API</label><br/>
+  <label><input type="radio" name="api" value="async" checked> Use newer, asynchronous API</label>
+</section>
+<section>
+  <h2>Cut/Paste Example</h2>
+  <p>
+    <textarea class="js-cuttextarea">Hello! Cut me programatically or maybe try pasting here.</textarea>
+  </p>
+
+  <p>
+    <button class="js-textareacutbtn">Cut text programatically</button>
+    <button class="js-textareapastebtn">Paste text programatically</button>
+  </p>
+</section>
+
+<section>
+  <h2>Copy Example</h2>
+  <p>Email me at <a class="js-emaillink" href="mailto:test@example.de">test@example.de</a></p>
+  <p>
+</section>
+
+<p id="logTarget"></p>
+
+
+<!-- input 2 cut paste-->
+
+<p>The button is larger when the primary pointer is coarse. The tooltip is visible on hover when the pointer allows hovering.</p>
+
+<div class="text-center">
+  <button id="button">The button</button>
+  <div id="tooltip" class="tooltip bottom" role="tooltip">
+    <div class="tooltip-arrow"></div>
+    <div class="tooltip-inner">
+      Tooltip visible on hover when pointer allows hover
+    </div>
+  </div>
+</div>
+
+<!-- recording media -->
+
+<video autoplay style="height:180px; width: 240px;" poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png"></video>
+<p><button onclick="getStream()">Grab video & start recording</button></p>
+<p><button onclick="download()">Download!</button></p>
+  
+
+<!-- geolocation -->
+<title>Finding Me</title>
+<script>
+function getLocation()
+{
+  // Check whether browser supports Geolocation API or not
+  if (navigator.geolocation) { // Supported
+  
+    // To add PositionOptions
+	
+	navigator.geolocation.getCurrentPosition(getPosition);
+  } else { // Not supported
+	alert("Oops! This browser does not support HTML Geolocation.");
+  }
+}
+function getPosition(position)
+{
+  document.getElementById("location").innerHTML = 
+	  "Latitude: " + position.coords.latitude + "<br>" +
+	  "Longitude: " + position.coords.longitude;
+}
+// To add catchError(positionError) function
+
+</script>
+</head>
+<body>
+<h1>Finding Me</h1>
+<button onclick="getLocation()">Where am I?</button>
+<p id="location"></p>
+</body>
+</html>
+
+<!-- local notification -->
+<html>
+
+    <body>
+
+        <button onclick="notifyMe()">Notify me!</button>
+
+        <script>
+        function notifyMe() {
+          // Let's check if the browser supports notifications
+          if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+          }
+
+          // Let's check if the user is okay to get some notification
+          else if (Notification.permission === "granted") {
+            // If it's okay let's create a notification
+            var notification = new Notification("Hi there!");
+          }
+           // Otherwise, we need to ask the user for permission
+          // Note, Chrome does not implement the permission static property
+          // So we have to check for NOT 'denied' instead of 'default'
+          else if (Notification.permission !== 'denied') {
+            Notification.requestPermission(function (permission) {
+
+              // Whatever the user answers, we make sure we store the information
+              if(!('permission' in Notification)) {
+                Notification.permission = permission;
+              }
+
+              // If the user is okay, let's create a notification
+              if (permission === "granted") {
+                var notification = new Notification("Hi there!");
+              }
+            });
+          }
+
+        }
+        </script>
+
+    </body>
+</html>
+
+<!-- mobile device features-->
+<p>Turn the network connection on/off to see the changes.</p>
+
+<p>Initial connection state was <b id="status">unknown</b>.</p>
+
+<div id="target"></div>
+
+<!--battery-->
+
+<p>Initial battery status was <b id="charging">unknown</b>, charging time <b id="chargingTime">unknown</b>, discharging time <b id="dischargingTime">unknown</b>, level <b id="level">unknown</b>.</p>
+
+<div id="target"></div>
+
+<!--payments-->
+<p><button onclick="donate()">Donate 10€ to What Web Can Do 😉</button> (demo only, no actual payment is processed)</p>
+
+<p id="log"></p>
